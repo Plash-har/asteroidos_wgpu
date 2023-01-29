@@ -71,3 +71,12 @@ pub fn update_players(world: &mut World, delta_t: f64) {
         player.pos += player.vel * delta_t;
     }
 }
+
+pub fn get_n_player_img() -> i32 {
+    let n_player_img: Vec<_> = match std::fs::read_dir("assets/players") {
+        Ok(val) => val,
+        Err(err) => panic!("Error while creating world, unable to access player textures: {}", err),
+    }.collect();
+
+    return n_player_img.len() as i32;
+}

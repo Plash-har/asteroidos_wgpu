@@ -18,20 +18,7 @@ pub struct World {
 }
 
 impl World {
-    pub fn new() -> World {
-        let n_player_img: Vec<_> = match std::fs::read_dir("assets/players") {
-            Ok(val) => val,
-            Err(err) => panic!("Error while creating world, unable to access player textures: {}", err),
-        }.collect();
-
-        let n_player_img = n_player_img.len() as i32;
-
-        let n_asteroid_img: Vec<_> = match std::fs::read_dir("assets/asteroids/") {
-            Ok(val) => val,
-            Err(err) => panic!("Error while creating world, unable to access player textures: {}", err),
-        }.collect();
-
-        let n_asteroid_img = n_asteroid_img.len() as i32;
+    pub fn new(n_asteroid_img: i32, n_player_img: i32) -> World {
 
         return World {
             asteroids: vec![
@@ -44,6 +31,18 @@ impl World {
             n_asteroid_img,
             asteroid_manager: AsteroidManager::new(),
         }
+    }
+
+    pub fn new_img_auto() -> World {
+        return World { 
+            players: vec![Player::new(), Player::new()], 
+            last_upd: Instant::now(), 
+            start_upd: Instant::now(), 
+            n_player_img: player::get_n_player_img(), 
+            n_asteroid_img: asteroids::get_n_asteroid_img(), 
+            asteroids: Vec::new(), 
+            asteroid_manager: AsteroidManager::new(),   
+        };
     }
     
     pub fn update(&mut self) {

@@ -19,7 +19,7 @@ fn main() {
     let (window, event_loop) = setup_window_and_event_loop();
 
     let mut renderer = pollster::block_on(MainRenderer::new(&window, 1., cgmath::Point2 { x: 0., y: 0. }));
-    let mut world = game_logic::World::new();
+    let mut world = game_logic::World::new_img_auto();
     let mut interface = interface::UserInterface::new();
     event_loop.run(move |event, _, control_flow| {
         renderer.handle_event(&event); // Necessary for egui

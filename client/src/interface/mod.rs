@@ -93,6 +93,15 @@ impl UserInterface {
                 player.press_left = self.keys.is_pressed(&KeyInput::TurnLeft);
                 player.press_right = self.keys.is_pressed(&KeyInput::TurnRight);
                 renderer.set_cam_pos(player.pos);
+
+                if self.keys.is_pressed(&KeyInput::Zoom) {
+                    self.cam_zoom *= DEBUG_CAM_ZOOM * delta_t - delta_t + 1.;
+                    renderer.set_zoom(self.cam_zoom);
+                }
+                if self.keys.is_pressed(&KeyInput::DeZoom) {
+                    self.cam_zoom /= DEBUG_CAM_ZOOM * delta_t - delta_t + 1.;
+                    renderer.set_zoom(self.cam_zoom);
+                }
             } else {
                 renderer.set_cam_pos(self.free_cam_pos);
                 if self.keys.is_pressed(&KeyInput::CamUp) {

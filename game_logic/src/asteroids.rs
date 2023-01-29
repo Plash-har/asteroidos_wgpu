@@ -115,25 +115,27 @@ impl AsteroidManager {
         } else {
             let mut n_updates_now = 0;
 
-            while n_updates_now < AsteroidManager::N_UPDATES_FRAMES {
-                let idx = (n_updates_now + self.last_del_idx) % asteroids.len();
-    
-                let ast = asteroids[idx];
-    
-                let mut to_dispose = true;
-    
-                for player in players {
-                    if player.pos.x - ast.pos.x < ASTEROID_DESCPAWN_DIST && player.pos.y - ast.pos.y < ASTEROID_DESCPAWN_DIST {
-                        to_dispose = false;
-                        break;
+            if asteroids.len() > 0 {
+                while n_updates_now < AsteroidManager::N_UPDATES_FRAMES {
+                    let idx = (n_updates_now + self.last_del_idx) % asteroids.len();
+        
+                    let ast = asteroids[idx];
+        
+                    let mut to_dispose = true;
+        
+                    for player in players {
+                        if player.pos.x - ast.pos.x < ASTEROID_DESCPAWN_DIST && player.pos.y - ast.pos.y < ASTEROID_DESCPAWN_DIST {
+                            to_dispose = false;
+                            break;
+                        }
                     }
-                }
-
-                if to_dispose {
-                    ast_to_dispose.push(idx);
-                }
     
-                n_updates_now += 1;
+                    if to_dispose {
+                        ast_to_dispose.push(idx);
+                    }
+        
+                    n_updates_now += 1;
+                }
             }
 
             self.last_del_idx += n_updates_now;
@@ -181,4 +183,13 @@ pub fn chunk_pos_from_pos(pos: cgmath::Point2<f64>) -> (i64, i64) {
 fn get_n_ast_in_chunk(pos: (i64, i64)) -> usize {
     let pos = (pos.0.abs() as usize, pos.1.abs() as usize);
     return pos.0 + pos.1 ^ 2;
+}
+
+pub fn get_n_asteroid_img() -> i32 {
+    let n_asteroid_img: Vec<_> = match std::fs::read_dir("assets/asteroids/") {
+        Ok(val) => val,
+        Err(err) => panic!("Error while creating world, unable to access player textures: {}", err),
+    }.collect();
+
+    return n_asteroid_img.len() as i32;
 }
