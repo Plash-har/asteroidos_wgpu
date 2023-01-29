@@ -1,0 +1,12 @@
+{
+    "Thrust" : "Up",
+    "Zoom" : "P",
+    "CamLeft" : "Q",
+    "CamUp" : "Z",
+    "TurnRight" : "Right",
+    "DeZoom" : "M",
+    "TurnLeft" : "Left",
+    "CamDown" : "S",
+    "CenterCam" : "O",
+    "CamRight" : "D"
+}
