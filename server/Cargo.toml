@@ -9,3 +9,6 @@ edition = "2021"
 
 [dependencies.game_logic]
 path = "../game_logic"
+
+[dependencies.web_types]
+path = "../web_types"

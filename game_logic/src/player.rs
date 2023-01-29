@@ -1,6 +1,8 @@
 use super::World;
 
-#[derive(Debug, Clone, Copy)]
+use serde::{Serialize, Deserialize};
+
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub struct Player {
     pub pos: cgmath::Point2<f64>,
     pub vel: cgmath::Vector2<f64>,
@@ -15,6 +17,7 @@ pub struct Player {
     pub accent_flame_color: [f32; 4],
     pub flame_frame: f32,
     pub player_img: i32,
+    #[serde(with = "serde_millis")]
     last_frame_upd: std::time::Instant,
 }
 
